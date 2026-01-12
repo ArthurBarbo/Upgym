@@ -11,6 +11,6 @@ export const typography = {
   Logintitle: {
     fontSize: 48,
     fontWeight: "800" as const,
-    letterSpacing: 3,
+    letterSpacing: 4,
   },
 };

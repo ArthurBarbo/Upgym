@@ -2,6 +2,7 @@ import { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
 import { colors, spacing, radius, typography } from "../theme";
 import { Button } from "../components/Button";
+import { Dumbbell } from "../components/Dumbbell";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -10,6 +11,10 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.top}>
+        <View style={styles.iconDumbell}>
+          <Dumbbell size={110} />
+        </View>
+
         <Text style={styles.brand}>UPGYM</Text>
         <Text style={styles.tagline}>Your wellness place</Text>
         <Text style={styles.subline}>Entre para continuar</Text>
@@ -77,7 +82,7 @@ const styles = StyleSheet.create({
   },
   brand: {
     ...typography.Logintitle,
-    color: colors.metallic,
+    color: colors.accent,
   },
   subtitle: {
     ...typography.body,
@@ -134,4 +139,5 @@ const styles = StyleSheet.create({
     color: colors.accent,
     fontWeight: "700",
   },
+  iconDumbell: { marginBottom: spacing.sm },
 });
