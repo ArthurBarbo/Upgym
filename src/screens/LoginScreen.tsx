@@ -12,7 +12,7 @@ export default function LoginScreen() {
       <View style={styles.top}>
         <Text style={styles.brand}>UPGYM</Text>
         <Text style={styles.tagline}>Your wellness place</Text>
-        <Text style={styles.subtitle}>Entre para continuar</Text>
+        <Text style={styles.subline}>Entre para continuar</Text>
         <View style={styles.accentLine} />
       </View>
 
@@ -22,7 +22,7 @@ export default function LoginScreen() {
           value={email}
           onChangeText={setEmail}
           placeholder="Insira seu E-mail"
-          placeholderTextColor={colors.gray}
+          placeholderTextColor={colors.placeholder}
           autoCapitalize="none"
           keyboardType="email-address"
           style={styles.input}
@@ -33,7 +33,7 @@ export default function LoginScreen() {
           value={password}
           onChangeText={setPassword}
           placeholder="Insira sua senha"
-          placeholderTextColor={colors.gray}
+          placeholderTextColor={colors.placeholder}
           secureTextEntry
           style={styles.input}
         />
@@ -57,36 +57,50 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     justifyContent: "center",
   },
+  tagline: {
+    ...typography.body,
+    color: colors.text,
+    opacity: 0.85,
+    marginTop: spacing.xs,
+    letterSpacing: 1,
+    textTransform: "uppercase",
+    fontSize: 20,
+  },
   top: {
     marginBottom: spacing.xl,
   },
-  brand: {
+  subline: {
     ...typography.title,
-    color: colors.primary,
-    letterSpacing: 2,
+    marginTop: spacing.md,
+    fontSize: 15,
+    color: colors.accent,
+  },
+  brand: {
+    ...typography.Logintitle,
+    color: colors.metallic,
   },
   subtitle: {
     ...typography.body,
-    color: colors.gray,
+    color: colors.textMuted,
     marginTop: spacing.sm,
   },
   accentLine: {
-    marginTop: spacing.md,
+    marginTop: spacing.sm,
     height: 4,
-    width: 56,
+    width: 100,
     backgroundColor: colors.accent,
     borderRadius: 999,
   },
   form: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: colors.surfaceSoft,
     borderRadius: radius.lg,
     padding: spacing.lg,
     borderWidth: 1,
-    borderColor: colors.gray,
+    borderColor: colors.border,
   },
   label: {
     ...typography.body,
-    color: colors.primary,
+    color: colors.text,
     fontWeight: "600",
     marginBottom: spacing.sm,
   },
@@ -94,10 +108,10 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: radius.md,
     borderWidth: 1,
-    borderColor: colors.gray,
+    borderColor: colors.border,
     paddingHorizontal: spacing.md,
-    color: colors.primary,
-    backgroundColor: "#FFFFFF",
+    color: colors.text,
+    backgroundColor: colors.surface,
   },
   forgot: {
     marginTop: spacing.md,
@@ -105,7 +119,7 @@ const styles = StyleSheet.create({
   },
   forgotText: {
     ...typography.body,
-    color: colors.gray,
+    color: colors.textMuted,
     fontWeight: "600",
   },
   signup: {
@@ -114,7 +128,7 @@ const styles = StyleSheet.create({
   },
   signupText: {
     ...typography.body,
-    color: colors.gray,
+    color: colors.textMuted,
   },
   signupAccent: {
     color: colors.accent,

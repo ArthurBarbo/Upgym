@@ -1,8 +1,23 @@
 export const colors = {
-  primary: "#0B0B0B",
-  black: "#7F1D1D",
-  gray: "#3F3F46",
-  background: "#E7E5E4",
-  text: "0B0B0B",
+  /* FUNDOS */
+  background: "#0A0A0A", // fundo geral (preto)
+  surface: "#1A1B1F", // cards / modais
+  surfaceSoft: "#21232A", // inputs / itens internos
+
+  /* TEXTO */
+  text: "#EDEDED", // texto principal
+  textMuted: "#A1A1AA", // texto secundário
+  placeholder: "#7C7F87", // placeholder
+
+  /* BORDAS */
+  border: "#2B2E36", // bordas / divisões
+
+  /* DESTAQUE */
+  accent: "#B11226", // vinho aceso (CTA)
+  accentDark: "#9E1B2E",
+
+  /* IDENTIDADE */
+  metallic: "#A1A6B0", // título / marca
   white: "#FFFFFF",
+  black: "#000000",
 };
