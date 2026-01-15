@@ -11,11 +11,11 @@ export default function LoginScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.top}>
-        <View style={styles.iconDumbell}>
-          <Dumbbell size={110} />
+        <View style={styles.brandRow}>
+          <Text style={styles.brand}>UPGYM</Text>
+          <Dumbbell size={90} />
         </View>
 
-        <Text style={styles.brand}>UPGYM</Text>
         <Text style={styles.tagline}>Your wellness place</Text>
         <Text style={styles.subline}>Entre para continuar</Text>
         <View style={styles.accentLine} />
@@ -84,6 +84,10 @@ const styles = StyleSheet.create({
     ...typography.Logintitle,
     color: colors.accent,
   },
+  brandRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   subtitle: {
     ...typography.body,
     color: colors.textMuted,
@@ -139,5 +143,4 @@ const styles = StyleSheet.create({
     color: colors.accent,
     fontWeight: "700",
   },
-  iconDumbell: { marginBottom: spacing.sm },
 });

@@ -1,20 +1,7 @@
-import { Image, StyleSheet } from "react-native";
+import DumbbellSvg from "@assets/dumbells.svg";
 
-type Props = {
-  size?: number;
-};
+type Props = { size?: number };
 
 export function Dumbbell({ size = 28 }: Props) {
-  return (
-    <Image
-      source={require("../../../assets/dumbells.png")}
-      style={[styles.icon, { width: size, height: size }]}
-      resizeMode="contain"
-      accessibilityLabel="Dumbbell icon"
-    />
-  );
+  return <DumbbellSvg width={size} height={size} />;
 }
-
-const styles = StyleSheet.create({
-  icon: {},
-});
