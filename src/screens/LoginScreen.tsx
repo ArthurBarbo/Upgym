@@ -13,7 +13,10 @@ export default function LoginScreen() {
       <View style={styles.top}>
         <View style={styles.brandRow}>
           <Text style={styles.brand}>UPGYM</Text>
-          <Dumbbell size={90} />
+          <Dumbbell
+            size={44}
+            style={{ transform: [{ scale: 1.8 }], marginLeft: 6 }}
+          />
         </View>
 
         <Text style={styles.tagline}>Your wellness place</Text>
@@ -73,6 +76,7 @@ const styles = StyleSheet.create({
   },
   top: {
     marginBottom: spacing.xl,
+    alignItems: "flex-start",
   },
   subline: {
     ...typography.title,
@@ -87,6 +91,8 @@ const styles = StyleSheet.create({
   brandRow: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "flex-start",
+    gap: spacing.xs,
   },
   subtitle: {
     ...typography.body,
