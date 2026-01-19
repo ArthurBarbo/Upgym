@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
-import { colors, spacing, radius, typography } from "../theme";
-import { Button } from "../components/Button";
+import { colors, spacing, radius, typography } from "../../theme";
+import { Button } from "../../components/Button";
 
 export default function ClientScreen() {
   return (

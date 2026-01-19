@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
-import { colors, spacing, radius, typography } from "../theme";
-import { Button } from "../components/Button";
-import { Dumbbell } from "../components/Dumbbell";
+import { colors, spacing, radius, typography } from "../../theme";
+import { Button } from "../../components/Button";
+import { Dumbbell } from "../../components/Dumbbell";
 import { useNavigation } from "@react-navigation/native";
 
 const MockUser = {
+  name: "Arthur",
   email: "aluno@upgym.com",
   password: "123456",
-  role: "student" as const,
 };
 
 export default function LoginScreen() {
@@ -17,21 +17,19 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  
-    function handleLogin() {
-  const normalizedEmail = email.trim().toLowerCase();
+  function handleLogin() {
+    const normalizedEmail = email.trim().toLowerCase();
 
-  const ok =
-    normalizedEmail === MockUser.email &&
-    password === MockUser.password;
+    const ok =
+      normalizedEmail === MockUser.email && password === MockUser.password;
 
-  if (!ok) {
-    alert("E-mail ou senha inválidos");
-    return;
+    if (!ok) {
+      alert("E-mail ou senha inválidos");
+      return;
+    }
+
+    navigation.replace("App", { user: MockUser });
   }
-
-  navigation.replace("Student");
-}
 
   return (
     <View style={styles.container}>
