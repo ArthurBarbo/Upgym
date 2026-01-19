@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
     fontSize: 15,
     color: colors.accent,
+    alignItems:"flex-start",
   },
   brand: {
     ...typography.Logintitle,
@@ -130,12 +131,14 @@ const styles = StyleSheet.create({
   },
   forgot: {
     marginTop: spacing.md,
-    alignSelf: "flex-end",
+    alignSelf: "flex-start",
+    width: "100%"
   },
   forgotText: {
     ...typography.body,
     color: colors.textMuted,
     fontWeight: "600",
+    textAlign: "left",
   },
   signup: {
     marginTop: spacing.lg,
