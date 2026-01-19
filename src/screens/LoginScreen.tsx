@@ -15,7 +15,7 @@ export default function LoginScreen() {
           <Text style={styles.brand}>UPGYM</Text>
           <Dumbbell
             size={44}
-            style={{ transform: [{ scale: 1.8 }], marginLeft: 6 }}
+            style={styles.dumbbellIcon}
           />
         </View>
 
@@ -149,4 +149,6 @@ const styles = StyleSheet.create({
     color: colors.accent,
     fontWeight: "700",
   },
+  dumbbellIcon: {transform: [{ scale: 2.8 }],
+    marginTop: 6,},
 });
