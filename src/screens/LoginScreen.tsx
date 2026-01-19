@@ -3,20 +3,42 @@ import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
 import { colors, spacing, radius, typography } from "../theme";
 import { Button } from "../components/Button";
 import { Dumbbell } from "../components/Dumbbell";
+import { useNavigation } from "@react-navigation/native";
+
+const MockUser = {
+  email: "aluno@upgym.com",
+  password: "123456",
+  role: "student" as const,
+};
 
 export default function LoginScreen() {
+  const navigation = useNavigation<any>();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  
+    function handleLogin() {
+  const normalizedEmail = email.trim().toLowerCase();
+
+  const ok =
+    normalizedEmail === MockUser.email &&
+    password === MockUser.password;
+
+  if (!ok) {
+    alert("E-mail ou senha inválidos");
+    return;
+  }
+
+  navigation.replace("Student");
+}
 
   return (
     <View style={styles.container}>
       <View style={styles.top}>
         <View style={styles.brandRow}>
           <Text style={styles.brand}>UPGYM</Text>
-          <Dumbbell
-            size={44}
-            style={styles.dumbbellIcon}
-          />
+          <Dumbbell size={44} style={styles.dumbbellIcon} />
         </View>
 
         <Text style={styles.tagline}>Your wellness place</Text>
@@ -48,7 +70,7 @@ export default function LoginScreen() {
 
         <View style={{ height: spacing.lg }} />
 
-        <Button title="Entrar" onPress={() => {}} />
+        <Button title="Entrar" onPress={handleLogin} />
 
         <Pressable onPress={() => {}} style={styles.forgot}>
           <Text style={styles.forgotText}>Esqueci minha senha</Text>
@@ -83,7 +105,7 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
     fontSize: 15,
     color: colors.accent,
-    alignItems:"flex-start",
+    alignItems: "flex-start",
   },
   brand: {
     ...typography.Logintitle,
@@ -132,7 +154,7 @@ const styles = StyleSheet.create({
   forgot: {
     marginTop: spacing.md,
     alignSelf: "flex-start",
-    width: "100%"
+    width: "100%",
   },
   forgotText: {
     ...typography.body,
@@ -152,6 +174,5 @@ const styles = StyleSheet.create({
     color: colors.accent,
     fontWeight: "700",
   },
-  dumbbellIcon: {transform: [{ scale: 2.8 }],
-    marginTop: 6,},
+  dumbbellIcon: { transform: [{ scale: 2.8 }], marginTop: 6 },
 });
