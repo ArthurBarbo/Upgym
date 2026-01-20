@@ -5,11 +5,21 @@ import { Button } from "../../components/Button";
 import { Dumbbell } from "../../components/Dumbbell";
 import { useNavigation } from "@react-navigation/native";
 
-const MockUser = {
-  name: "Arthur",
-  email: "aluno@upgym.com",
-  password: "123456",
-};
+const MockUser = [
+  {
+    role: "student" as const,
+    name: "Arthur",
+    email: "aluno@upgym.com",
+    password: "123456",
+  },
+
+  {
+    role: "staff" as const,
+    name: "Bruno",
+    email: "staff@upgym.com",
+    password: "123456",
+  },
+];
 
 export default function LoginScreen() {
   const navigation = useNavigation<any>();
@@ -20,15 +30,25 @@ export default function LoginScreen() {
   function handleLogin() {
     const normalizedEmail = email.trim().toLowerCase();
 
-    const ok =
-      normalizedEmail === MockUser.email && password === MockUser.password;
+    const found = MockUser.find(
+      (u) => u.email === normalizedEmail && u.password === password
+    );
 
-    if (!ok) {
+    if (!found) {
       alert("E-mail ou senha inválidos");
       return;
     }
 
-    navigation.replace("App", { user: MockUser });
+    if (found.role === "student") {
+      navigation.replace("Student", {
+        user: { role: "student", name: found.name, email: found.email },
+      });
+      return;
+    }
+
+    navigation.replace("Client", {
+      user: { role: "staff", name: found.name, email: found.email },
+    });
   }
 
   return (

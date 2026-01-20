@@ -1,6 +1,10 @@
 import { View, Text, StyleSheet } from "react-native";
 import { colors, spacing, radius, typography } from "../../theme";
 import { Button } from "../../components/Button";
+import { useRoute } from "@react-navigation/native";
+
+const route = useRoute<any>();
+const staffName = route?.params?.user?.name ?? "staff";
 
 export default function ClientScreen() {
   return (
