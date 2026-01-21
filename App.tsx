@@ -1,6 +1,7 @@
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { ActivityIndicator, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { useFonts } from "expo-font";
 import { BlackOpsOne_400Regular } from "@expo-google-fonts/black-ops-one";
@@ -9,9 +10,7 @@ import AppNavigator from "./src/navigation";
 import { colors } from "./src/theme";
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    BlackOpsOne_400Regular,
-  });
+  const [fontsLoaded] = useFonts({ BlackOpsOne_400Regular });
 
   if (!fontsLoaded) {
     return (
@@ -29,8 +28,10 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <AppNavigator />
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }

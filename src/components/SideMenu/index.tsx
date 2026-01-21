@@ -6,6 +6,7 @@ import {
   Animated,
   Dimensions,
 } from "react-native";
+
 import { colors, spacing, radius, typography } from "../../theme";
 import { useEffect, useRef } from "react";
 

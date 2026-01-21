@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   title: {
     ...typography.Logintitle,
     color: colors.text,
-    marginTop: spacing.sm,
+    marginTop: spacing.md,
   },
   subtitle: {
     ...typography.body,
