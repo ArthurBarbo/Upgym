@@ -15,6 +15,7 @@ export const colors = {
   /* DESTAQUE */
   accent: "#B11226", // vinho aceso (CTA)
   accentDark: "#9E1B2E",
+  accentplus: "#FF3B30",
 
   /* IDENTIDADE */
   metallic: "#A1A6B0", // título / marca
