@@ -19,7 +19,8 @@ type Props = {
   title?: string;
   subtitle?: string;
   items: MenuItem[];
-  onLogout?: () => void; // TEMPLATE: ação do botão Sair
+  onLogout?: () => void;
+  titleStyle?: any; // TEMPLATE: ação do botão Sair
 };
 
 export function SideMenu({
@@ -28,7 +29,8 @@ export function SideMenu({
   title = "Menu",
   subtitle,
   items,
-  onLogout, // TEMPLATE
+  onLogout,
+  titleStyle, // TEMPLATE
 }: Props) {
   const screenH = Dimensions.get("window").height;
 
@@ -113,7 +115,7 @@ export function SideMenu({
       >
         <View style={styles.header}>
           <View style={styles.headerText}>
-            <Text style={styles.title}>{title}</Text>
+            <Text style={[styles.title, titleStyle]}>{title}</Text>
             {!!subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
           </View>
 

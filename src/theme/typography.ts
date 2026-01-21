@@ -12,6 +12,11 @@ export const typography = {
     fontFamily: "BlackOpsOne_400Regular",
     letterSpacing: 2,
   },
+  SideMenuTitle: {
+    fontSize: 18,
+    fontFamily: "BlackOpsOne_400Regular",
+    letterSpacing: 2,
+  },
   AlternativeLarge: {
     fontSize: 48,
     fontFamily: "Staatliches_400Regular",

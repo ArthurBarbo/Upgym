@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { FireIcon } from "@/components/FireIcon";
 import { colors, spacing, radius, typography } from "../../theme";
 import { SideMenu } from "../../components/SideMenu";
+import { Dumbbell, BookOpen, Flame, CalendarDays } from "lucide-react-native";
 
 export default function StudentScreen() {
   const navigation = useNavigation<any>();
@@ -30,7 +30,7 @@ export default function StudentScreen() {
         </View>
       </View>
 
-      {/* TEMPLATE: Grid do painel (2x2) */}
+      {/* { Grid do painel (2x2) */}
       <View style={styles.panelGrid}>
         <Pressable
           style={({ pressed }) => [
@@ -43,7 +43,7 @@ export default function StudentScreen() {
           android_ripple={{ color: "rgba(255,255,255,0.08)" }}
         >
           <View style={styles.panelTileRow}>
-            <FireIcon size={26} style={styles.panelTileIcon} />
+            <Dumbbell size={22} color={colors.accent} />
             <Text style={styles.panelTileText}>Treinos</Text>
           </View>
         </Pressable>
@@ -59,8 +59,8 @@ export default function StudentScreen() {
           android_ripple={{ color: "rgba(255,255,255,0.08)" }}
         >
           <View style={styles.panelTileRow}>
-            <Text style={styles.panelTileEmoji}>🏋️</Text>
-            <Text style={styles.panelTileText}>Exercícios</Text>
+            <BookOpen size={22} color={colors.accent} />
+            <Text style={styles.panelTileText}>Biblioteca</Text>
           </View>
         </Pressable>
 
@@ -75,8 +75,8 @@ export default function StudentScreen() {
           android_ripple={{ color: "rgba(255,255,255,0.08)" }}
         >
           <View style={styles.panelTileRow}>
-            <Text style={styles.panelTileEmoji}>📏</Text>
-            <Text style={styles.panelTileText}>Marcações</Text>
+            <Flame size={22} color={colors.accent} />
+            <Text style={styles.panelTileText}>Sequência</Text>
           </View>
         </Pressable>
 
@@ -91,8 +91,8 @@ export default function StudentScreen() {
           android_ripple={{ color: "rgba(255,255,255,0.08)" }}
         >
           <View style={styles.panelTileRow}>
-            <Text style={styles.panelTileEmoji}>📅</Text>
-            <Text style={styles.panelTileText}>Calendário</Text>
+            <CalendarDays size={22} color={colors.accent} />
+            <Text style={styles.panelTileText}>Marcações</Text>
           </View>
         </Pressable>
       </View>
@@ -101,6 +101,7 @@ export default function StudentScreen() {
         visible={menuOpen}
         onClose={() => setMenuOpen(false)}
         title="UPGYM"
+        titleStyle={typography.SideMenuTitle}
         subtitle={`Logado como ${userName}`}
         items={[
           {
@@ -129,25 +130,32 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    padding: spacing.lg,
+    paddingHorizontal: spacing.lg,
+    paddingBottom: spacing.lg,
+    paddingTop: spacing.xxl,
   },
   hamburger: {
-    alignSelf: "center",
-    padding: spacing.xl,
+    position: "absolute",
+    top: spacing.lg + 20,
+    left: spacing.lg - 10,
+    zIndex: 20,
+    padding: spacing.sm,
     borderRadius: radius.md,
   },
-  hamburgerText: { color: colors.text, fontSize: 40, fontWeight: "900" },
-
+  hamburgerText: {
+    color: colors.accent,
+    fontSize: 50,
+    fontWeight: "900",
+  },
   title: {
     ...typography.AlternativeLarge,
     color: colors.text,
-    marginTop: spacing.sm,
     fontSize: 34,
   },
   titleUser: {
     ...typography.AlternativeLarge,
     color: colors.accentplus,
-    marginTop: spacing.xl,
+    marginTop: spacing.xxl,
   },
   subtitle: {
     ...typography.body,
@@ -185,7 +193,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 
-  // TEMPLATE: grid do painel
   panelGrid: {
     marginTop: spacing.lg,
     flexDirection: "row",
@@ -194,7 +201,6 @@ const styles = StyleSheet.create({
     rowGap: spacing.md,
   },
 
-  // TEMPLATE: tile do painel
   panelTile: {
     width: "48%",
     backgroundColor: colors.surfaceSoft,
@@ -205,13 +211,11 @@ const styles = StyleSheet.create({
     borderColor: colors.accentDark,
   },
 
-  // TEMPLATE: feedback de clique
   panelTilePressed: {
     opacity: 0.85,
     transform: [{ scale: 0.99 }],
   },
 
-  // TEMPLATE: linha interna do tile
   panelTileRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -219,19 +223,12 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
   },
 
-  // TEMPLATE: texto do tile
   panelTileText: {
-    ...typography.body,
+    ...typography.Alternative,
     color: colors.text,
-    fontSize: 16,
+    fontSize: 19,
   },
 
-  // TEMPLATE: emoji (troca por ícone depois se quiser)
-  panelTileEmoji: {
-    fontSize: 20,
-  },
-
-  // TEMPLATE: ícone
   panelTileIcon: {
     transform: [{ scale: 0.95 }],
   },
