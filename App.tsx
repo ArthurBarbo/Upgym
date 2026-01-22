@@ -1,4 +1,5 @@
 import "react-native-gesture-handler";
+import "./src/config/calendarLocale";
 import { NavigationContainer } from "@react-navigation/native";
 import { ActivityIndicator, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";

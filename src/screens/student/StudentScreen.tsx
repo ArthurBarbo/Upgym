@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { colors, spacing, radius, typography } from "../../theme";
 import { SideMenu } from "../../components/SideMenu";
 import { Dumbbell, BookOpen, Flame, CalendarDays } from "lucide-react-native";
+import { CalendarToggleModal } from "@/components/SequencyCalendar/SequencyCalendar";
 
 export default function StudentScreen() {
   const navigation = useNavigation<any>();
@@ -11,6 +12,7 @@ export default function StudentScreen() {
   const userName = route?.params?.user?.name ?? "aluno";
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [calendarOpen, setCalendarOpen] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -30,7 +32,6 @@ export default function StudentScreen() {
         </View>
       </View>
 
-      {/* { Grid do painel (2x2) */}
       <View style={styles.panelGrid}>
         <Pressable
           style={({ pressed }) => [
@@ -69,7 +70,7 @@ export default function StudentScreen() {
             styles.panelTile,
             pressed && styles.panelTilePressed,
           ]}
-          onPress={() => console.log("TEMPLATE: navegar para Medições")}
+          onPress={() => setCalendarOpen(true)}
           accessibilityRole="button"
           hitSlop={10}
           android_ripple={{ color: "rgba(255,255,255,0.08)" }}
@@ -97,6 +98,11 @@ export default function StudentScreen() {
         </Pressable>
       </View>
 
+      <CalendarToggleModal
+        open={calendarOpen}
+        onClose={() => setCalendarOpen(false)}
+      />
+
       <SideMenu
         visible={menuOpen}
         onClose={() => setMenuOpen(false)}
@@ -115,10 +121,6 @@ export default function StudentScreen() {
           {
             label: "Meu perfil",
             onPress: () => navigation.navigate("Profile"),
-          },
-          {
-            label: "Área do staff",
-            onPress: () => navigation.navigate("Client"),
           },
         ]}
       />
