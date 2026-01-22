@@ -5,6 +5,7 @@ import { colors, spacing, radius, typography } from "../../theme";
 import { SideMenu } from "../../components/SideMenu";
 import { Dumbbell, BookOpen, Flame, CalendarDays } from "lucide-react-native";
 import { CalendarToggleModal } from "@/components/SequencyCalendar/SequencyCalendar";
+import { QrModal } from "@/components/Modal/QrModal/QrModal";
 
 export default function StudentScreen() {
   const navigation = useNavigation<any>();
@@ -13,6 +14,7 @@ export default function StudentScreen() {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -86,7 +88,9 @@ export default function StudentScreen() {
             styles.panelTile,
             pressed && styles.panelTilePressed,
           ]}
-          onPress={() => console.log("TEMPLATE: navegar para Calendário")}
+          onPress={() =>
+            navigation.navigate("Markings", { user: route?.params?.user })
+          }
           accessibilityRole="button"
           hitSlop={10}
           android_ripple={{ color: "rgba(255,255,255,0.08)" }}
@@ -103,6 +107,8 @@ export default function StudentScreen() {
         onClose={() => setCalendarOpen(false)}
       />
 
+      <QrModal open={qrOpen} onClose={() => setQrOpen(false)} />
+
       <SideMenu
         visible={menuOpen}
         onClose={() => setMenuOpen(false)}
@@ -112,7 +118,7 @@ export default function StudentScreen() {
         items={[
           {
             label: "Check-in (QR)",
-            onPress: () => console.log("abrir modal qr depois"),
+            onPress: () => setQrOpen(true),
           },
           {
             label: "Meus treinos",
@@ -121,6 +127,10 @@ export default function StudentScreen() {
           {
             label: "Meu perfil",
             onPress: () => navigation.navigate("Profile"),
+          },
+          {
+            label: "Minhas Marcações",
+            onPress: () => navigation.navigate("Markings"),
           },
         ]}
       />

@@ -20,7 +20,7 @@ type Props = {
   subtitle?: string;
   items: MenuItem[];
   onLogout?: () => void;
-  titleStyle?: any; // TEMPLATE: ação do botão Sair
+  titleStyle?: any;
 };
 
 export function SideMenu({
@@ -30,7 +30,7 @@ export function SideMenu({
   subtitle,
   items,
   onLogout,
-  titleStyle, // TEMPLATE
+  titleStyle,
 }: Props) {
   const screenH = Dimensions.get("window").height;
 
@@ -40,7 +40,6 @@ export function SideMenu({
     return Math.min(base + extra, Math.floor(screenH * 0.78));
   }, [items.length, screenH]);
 
-  // mantém montado enquanto fecha animando
   const [shouldRender, setShouldRender] = useState(visible);
 
   const overlay = useRef(new Animated.Value(0)).current;
@@ -50,7 +49,6 @@ export function SideMenu({
     if (visible) {
       setShouldRender(true);
 
-      // prepara posição inicial (fora, em cima)
       overlay.setValue(0);
       slide.setValue(-menuH);
 
@@ -71,7 +69,6 @@ export function SideMenu({
       return;
     }
 
-    // FECHAR: anima pra cima e só desmonta no fim (sem setValue aqui)
     Animated.parallel([
       Animated.timing(overlay, {
         toValue: 0,
@@ -94,7 +91,6 @@ export function SideMenu({
 
   return (
     <View style={styles.root} pointerEvents="box-none">
-      {/* Backdrop clicável */}
       <Pressable
         onPress={onClose}
         style={StyleSheet.absoluteFill}
@@ -103,7 +99,6 @@ export function SideMenu({
         <Animated.View style={[styles.overlay, { opacity: overlay }]} />
       </Pressable>
 
-      {/* Painel */}
       <Animated.View
         style={[
           styles.panel,
@@ -143,7 +138,6 @@ export function SideMenu({
           ))}
         </View>
 
-        {/* Botão sair */}
         <Pressable
           onPress={() => {
             onClose();
