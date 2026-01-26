@@ -42,3 +42,7 @@ export function updateRequestStatus(id: string, status: BookingRequestStatus) {
   if (idx >= 0) requests[idx] = { ...requests[idx], status };
   return requests[idx];
 }
+
+export function listRequestsByStudent(studentName: string) {
+  return requests.filter((r) => r.studentName === studentName);
+}

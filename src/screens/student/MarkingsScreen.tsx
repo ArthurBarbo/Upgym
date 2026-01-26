@@ -12,6 +12,7 @@ import { Calendar } from "react-native-calendars";
 import { TRAINERS } from "../../services/Trainers";
 import { colors, spacing, radius, typography } from "@/theme";
 import { createBookingRequest } from "@/services/bookingRequests";
+import { listRequestsByStudent } from "@/services/bookingRequests";
 
 function toISODate(d: Date) {
   const y = d.getFullYear();
@@ -57,6 +58,14 @@ export default function MarkingsScreen({ navigation, route }: any) {
 
   const allSlots = useMemo(() => buildSlots(), []);
 
+  const trainerNameById = useMemo(() => {
+    const map: Record<string, string> = {};
+    TRAINERS.forEach((t) => {
+      map[t.id] = t.name;
+    });
+    return map;
+  }, []);
+
   const availableSlots = useMemo(() => {
     if (!trainerSelected) return [];
     const blocked = MOCK_BLOCKED[trainerSelected.id]?.[selectedDate] ?? [];
@@ -94,12 +103,42 @@ export default function MarkingsScreen({ navigation, route }: any) {
     };
   }, [selectedDate]);
 
+  const myRequests = useMemo(() => {
+    return listRequestsByStudent(userName);
+  }, [userName]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Marcações</Text>
       <Text style={styles.subtitle}>Escolha um personal para agendar</Text>
 
       <ScrollView contentContainerStyle={{ paddingBottom: spacing.xxl }}>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Minhas marcações</Text>
+
+          {myRequests.length === 0 ? (
+            <Text style={styles.sectionEmpty}>
+              Você ainda não tem marcações.
+            </Text>
+          ) : (
+            myRequests.map((r) => (
+              <View key={r.id} style={styles.requestCard}>
+                <View style={styles.requestTopRow}>
+                  <Text style={styles.requestMain}>
+                    {r.date} • {r.hour}
+                  </Text>
+
+                  <View style={[styles.statusBadge, styles.statusPending]}>
+                    <Text style={styles.statusText}>PENDENTE</Text>
+                  </View>
+                </View>
+
+                <Text style={styles.requestSub}>Personal: {r.trainerId}</Text>
+              </View>
+            ))
+          )}
+        </View>
+
         <View style={styles.list}>
           {TRAINERS.map((t) => {
             const soldOut = t.status === "SOLD_OUT";
@@ -513,5 +552,63 @@ const styles = StyleSheet.create({
     ...typography.Alternative,
     color: colors.text,
     fontSize: 23,
+  },
+  section: {
+    marginTop: spacing.lg,
+    backgroundColor: colors.surfaceSoft,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: spacing.lg,
+  },
+  sectionTitle: {
+    ...typography.Alternative,
+    color: colors.text,
+    fontSize: 16,
+  },
+  sectionEmpty: {
+    ...typography.body,
+    color: colors.textMuted,
+    marginTop: spacing.sm,
+  },
+  requestCard: {
+    marginTop: spacing.md,
+    padding: spacing.md,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    borderColor: colors.accentDark,
+    backgroundColor: "rgba(255,255,255,0.03)",
+  },
+  requestTopRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: spacing.md,
+  },
+  requestMain: {
+    ...typography.body,
+    color: colors.text,
+    fontWeight: "900",
+  },
+  requestSub: {
+    ...typography.body,
+    color: colors.textMuted,
+    marginTop: spacing.xs,
+  },
+  statusBadge: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 999,
+    borderWidth: 1,
+  },
+  statusPending: {
+    borderColor: colors.accent,
+    backgroundColor: "rgba(255, 187, 0, 0.18)",
+  },
+  statusText: {
+    ...typography.body,
+    color: colors.text,
+    fontWeight: "900",
+    fontSize: 12,
   },
 });
