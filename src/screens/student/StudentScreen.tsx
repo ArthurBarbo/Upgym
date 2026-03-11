@@ -126,7 +126,8 @@ export default function StudentScreen() {
           },
           {
             label: "Meu perfil",
-            onPress: () => navigation.navigate("Profile"),
+            onPress: () =>
+              navigation.navigate("Profile", { user: route.params.user }),
           },
           {
             label: "Minhas Marcações",

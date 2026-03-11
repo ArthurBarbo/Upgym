@@ -21,4 +21,7 @@ export const colors = {
   metallic: "#A1A6B0", // título / marca
   white: "#FFFFFF",
   black: "#000000",
+
+  /*utilitario*/
+  green: "#22C55E",
 };
