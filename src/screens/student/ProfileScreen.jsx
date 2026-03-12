@@ -19,7 +19,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "Profile">;
 export default function ProfileScreen({ navigation, route }: Props) {
     const user = route.params?.user;
 
-    // fallback pra não crashar se abrir sem params
+    // ✅ fallback só quando NÃO tiver user
     if (!user) {
         return (
             <View style={styles.fallbackContainer}>
@@ -35,15 +35,14 @@ export default function ProfileScreen({ navigation, route }: Props) {
         );
     }
 
+    // ✅ hooks dentro do componente
     const [editing, setEditing] = useState(false);
     const [name, setName] = useState(user.name);
-
 
     const mensalidade = 89.9;
     const ultimoPagamento = "05/03/2026";
     const proximoVencimento = "05/04/2026";
     const status = "Ativo";
-
 
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
@@ -86,6 +85,7 @@ export default function ProfileScreen({ navigation, route }: Props) {
         Alert.alert("Feito", "Senha alterada");
     }
 
+    // ✅ return principal dentro do componente
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.content}>
             <View style={styles.header}>
@@ -103,7 +103,6 @@ export default function ProfileScreen({ navigation, route }: Props) {
                 </Pressable>
             </View>
 
-            {/* CARD DADOS */}
             <View style={styles.card}>
                 <Text style={styles.cardTitle}>Dados do aluno</Text>
 
@@ -118,9 +117,14 @@ export default function ProfileScreen({ navigation, route }: Props) {
                 />
 
                 <Text style={[styles.label, { marginTop: spacing.md }]}>E-mail</Text>
-                <View style={[styles.input, styles.readonly]}>
-                    <Text style={styles.readonlyText}>{user.email}</Text>
-                </View>
+
+                {/* Email cinza e não clicável */}
+                <TextInput
+                    value={user.email}
+                    editable={false}
+                    selectTextOnFocus={false}
+                    style={[styles.input, styles.emailDisabled]}
+                />
 
                 <View style={styles.divider} />
 
@@ -130,7 +134,6 @@ export default function ProfileScreen({ navigation, route }: Props) {
                 </View>
             </View>
 
-            {/* CARD PAGAMENTOS */}
             <View style={styles.card}>
                 <Text style={styles.cardTitle}>Mensalidade e pagamentos</Text>
 
@@ -157,7 +160,6 @@ export default function ProfileScreen({ navigation, route }: Props) {
                 </Pressable>
             </View>
 
-            {/* CARD SENHA */}
             <View style={styles.card}>
                 <Text style={styles.cardTitle}>Trocar senha</Text>
 
@@ -229,7 +231,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         marginBottom: spacing.lg,
-        marginTop: spacing.xl
+        marginTop: spacing.xl,
     },
     backBtn: {
         width: 44,
@@ -246,7 +248,6 @@ const styles = StyleSheet.create({
         ...typography.AlternativeLarge,
         color: colors.accent,
         fontSize: 35,
-
     },
     actionBtn: {
         height: 44,
@@ -289,12 +290,14 @@ const styles = StyleSheet.create({
         paddingHorizontal: spacing.md,
         color: colors.text,
         backgroundColor: colors.surface,
-        justifyContent: "center",
     },
     inputDisabled: { opacity: 0.8 },
 
-    readonly: { opacity: 0.95 },
-    readonlyText: { color: colors.text, fontWeight: "700" },
+    emailDisabled: {
+        backgroundColor: colors.surfaceSoft,
+        color: colors.textMuted,
+        opacity: 0.95,
+    },
 
     divider: {
         marginTop: spacing.lg,
@@ -323,7 +326,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: colors.accent,
     },
-    primaryText: { color: colors.accent, fontWeight: "900" },
+    primaryText: { color: colors.text, fontWeight: "900" },
 
     secondaryBtn: {
         marginTop: spacing.lg,
@@ -333,7 +336,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: colors.surfaceSoft,
         borderWidth: 1,
-        borderColor: colors.border,
+        borderColor: colors.accent,
     },
     secondaryText: { color: colors.text, fontWeight: "900" },
 });
