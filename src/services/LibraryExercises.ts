@@ -3,6 +3,7 @@ export type Exercise = {
   name: string;
   equipment: string;
   level: "Iniciante" | "Intermediário" | "Avançado";
+  howTo?: string;
 };
 
 export type BodyGroup = { id: BodyGroupId; label: string };
@@ -17,7 +18,8 @@ export type BodyGroupId =
   | "posterior"
   | "gluteo"
   | "panturrilha"
-  | "abdomen";
+  | "abdomen"
+  | "mobilidade";
 
 export const BODY_GROUPS: BodyGroup[] = [
   { id: "peito", label: "Peito" },
@@ -30,6 +32,7 @@ export const BODY_GROUPS: BodyGroup[] = [
   { id: "gluteo", label: "Glúteo" },
   { id: "panturrilha", label: "Panturrilha" },
   { id: "abdomen", label: "Abdômen" },
+  { id: "mobilidade", label: "Mobilidade" },
 ];
 
 export const EXERCISES_BY_GROUP: Record<BodyGroupId, Exercise[]> = {
@@ -281,6 +284,48 @@ export const EXERCISES_BY_GROUP: Record<BodyGroupId, Exercise[]> = {
       name: "Abdominal no cabo",
       equipment: "Polia",
       level: "Intermediário",
+    },
+  ],
+  mobilidade: [
+    {
+      id: "mobilidade-cervical-controlada",
+      name: "Mobilidade cervical controlada",
+      equipment: "Nenhum",
+      level: "Iniciante",
+      howTo:
+        "Em pé/sentado, coluna alta. Queixo levemente recolhido. Incline a cabeça para o lado sem levantar o ombro. Volte ao centro e repita. 1 min cada lado.",
+    },
+    {
+      id: "rotacao-toracica-quatro-apoios",
+      name: "Rotação torácica (4 apoios)",
+      equipment: "Nenhum",
+      level: "Iniciante",
+      howTo:
+        "Em 4 apoios, mão atrás da cabeça. Abra o cotovelo girando o tronco para cima. Volte fechando. Quadril parado. 1 min cada lado.",
+    },
+    {
+      id: "circulos-ombros-escapula",
+      name: "Círculos de ombros (escápula)",
+      equipment: "Nenhum",
+      level: "Iniciante",
+      howTo:
+        "Círculos grandes com os ombros: 1 min para trás e 1 min para frente. Movimento lento, sem tensionar o pescoço.",
+    },
+    {
+      id: "mobilidade-quadril-90-90",
+      name: "Mobilidade de quadril 90/90",
+      equipment: "Nenhum",
+      level: "Intermediário",
+      howTo:
+        "Sente em 90/90. Tronco alto. Incline levemente à frente. Troque para o outro lado controlando os joelhos. 1 min cada lado.",
+    },
+    {
+      id: "flexao-tornozelo-parede",
+      name: "Flexão de tornozelo na parede",
+      equipment: "Parede",
+      level: "Iniciante",
+      howTo:
+        "Pé a alguns cm da parede. Calcanhar no chão. Leve o joelho até a parede sem levantar o calcanhar. Ajuste a distância. 1 min cada lado.",
     },
   ],
 };

@@ -40,7 +40,7 @@ export default function StudentScreen() {
             styles.panelTile,
             pressed && styles.panelTilePressed,
           ]}
-          onPress={() => navigation.navigate("TrainingScreen")}
+          onPress={() => navigation.navigate("Trainings")}
           accessibilityRole="button"
           hitSlop={10}
           android_ripple={{ color: "rgba(255,255,255,0.08)" }}

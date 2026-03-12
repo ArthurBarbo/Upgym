@@ -20,7 +20,6 @@ const SCREEN_BG = require("../../../assets/Library/background.jpg");
 export default function LibraryScreen({ navigation }: Props) {
   return (
     <ImageBackground source={SCREEN_BG} style={styles.bg} resizeMode="cover">
-      {/* overlay pra manter contraste */}
       <View style={styles.bgOverlay}>
         <View style={styles.container}>
           <Text style={styles.title}>Biblioteca</Text>
@@ -56,13 +55,11 @@ export default function LibraryScreen({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-  // fundo da tela
   bg: {
     flex: 1,
-    backgroundColor: colors.background, // fallback caso a imagem falhe
+    backgroundColor: colors.background,
   },
 
-  // overlay escuro em cima do background
   bgOverlay: {
     flex: 1,
   },
