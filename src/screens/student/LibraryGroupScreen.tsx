@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { colors, spacing, radius, typography } from "@/theme";
-import type { RootStackParamList } from "@/navigation"; // ajuste o caminho se necessário
+import type { RootStackParamList } from "@/navigation";
 import {
   EXERCISES_BY_GROUP,
   type BodyGroupId,
