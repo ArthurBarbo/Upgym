@@ -16,6 +16,11 @@ export default function StudentScreen() {
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
 
+  // Mock progresso
+  const completed = 6;
+  const total = 20;
+  const progressPct = total ? Math.round((completed / total) * 100) : 0;
+
   return (
     <View style={styles.container}>
       <Pressable onPress={() => setMenuOpen(true)} style={styles.hamburger}>
@@ -102,6 +107,47 @@ export default function StudentScreen() {
         </Pressable>
       </View>
 
+      <View style={styles.bottomCards}>
+        <View style={styles.progressCard}>
+          <View style={styles.progressTop}>
+            <Text style={styles.progressTitle}>Progresso da semana</Text>
+            <Text style={styles.progressValue}>
+              {completed}/{total}
+            </Text>
+          </View>
+
+          <View style={styles.progressBarBg}>
+            <View
+              style={[styles.progressBarFill, { width: `${progressPct}%` }]}
+            />
+          </View>
+        </View>
+
+        <Pressable
+          onPress={() => navigation.navigate("Trainings")}
+          style={({ pressed }) => [
+            styles.trainCard,
+            pressed && styles.trainCardPressed,
+          ]}
+        >
+          <View pointerEvents="none" style={styles.trainPattern}>
+            {Array.from({ length: 18 }).map((_, i) => (
+              <Flame
+                key={i}
+                size={18}
+                color={colors.text}
+                style={styles.trainPatternIcon}
+              />
+            ))}
+          </View>
+
+          <View style={styles.trainContent}>
+            <Flame size={34} color={colors.text} />
+            <Text style={styles.trainText}>Treinar</Text>
+          </View>
+        </Pressable>
+      </View>
+
       <CalendarToggleModal
         open={calendarOpen}
         onClose={() => setCalendarOpen(false)}
@@ -116,10 +162,7 @@ export default function StudentScreen() {
         titleStyle={typography.SideMenuTitle}
         subtitle={`Logado como ${userName}`}
         items={[
-          {
-            label: "Check-in (QR)",
-            onPress: () => setQrOpen(true),
-          },
+          { label: "Check-in (QR)", onPress: () => setQrOpen(true) },
           {
             label: "Meus treinos",
             onPress: () => navigation.navigate("Trainings"),
@@ -127,7 +170,7 @@ export default function StudentScreen() {
           {
             label: "Meu perfil",
             onPress: () =>
-              navigation.navigate("Profile", { user: route.params.user }),
+              navigation.navigate("Profile", { user: route?.params?.user }),
           },
           {
             label: "Minhas Marcações",
@@ -155,16 +198,8 @@ const styles = StyleSheet.create({
     padding: spacing.sm,
     borderRadius: radius.md,
   },
-  hamburgerText: {
-    color: colors.accent,
-    fontSize: 50,
-    fontWeight: "900",
-  },
-  title: {
-    ...typography.AlternativeLarge,
-    color: colors.text,
-    fontSize: 34,
-  },
+  hamburgerText: { color: colors.accent, fontSize: 50, fontWeight: "900" },
+
   titleUser: {
     ...typography.AlternativeLarge,
     color: colors.accentplus,
@@ -192,14 +227,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: spacing.xs,
   },
-
   registrationValue: {
     ...typography.Alternative,
     color: colors.accent,
     fontSize: 19,
     marginTop: 0,
   },
-
   statusLabel: {
     ...typography.body,
     color: colors.textMuted,
@@ -213,7 +246,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     rowGap: spacing.md,
   },
-
   panelTile: {
     width: "48%",
     backgroundColor: colors.surfaceSoft,
@@ -223,26 +255,90 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.accentDark,
   },
-
-  panelTilePressed: {
-    opacity: 0.85,
-    transform: [{ scale: 0.99 }],
-  },
-
+  panelTilePressed: { opacity: 0.85, transform: [{ scale: 0.99 }] },
   panelTileRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
     gap: spacing.sm,
   },
-
   panelTileText: {
     ...typography.Alternative,
     color: colors.text,
     fontSize: 19,
   },
 
-  panelTileIcon: {
-    transform: [{ scale: 0.95 }],
+  bottomCards: {
+    marginTop: spacing.lg,
+    gap: spacing.md,
+  },
+
+  progressCard: {
+    backgroundColor: colors.surfaceSoft,
+    borderRadius: radius.lg,
+    padding: spacing.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    minHeight: 220,
+    justifyContent: "space-between",
+  },
+  progressTop: {
+    flexDirection: "column",
+  },
+  progressTitle: {
+    ...typography.Alternative,
+    color: colors.text,
+    fontSize: 40,
+  },
+  progressValue: {
+    marginTop: spacing.md,
+    color: colors.textMuted,
+    fontSize: 27,
+    fontWeight: "900",
+  },
+  progressBarBg: {
+    height: 30,
+    borderRadius: 999,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    overflow: "hidden",
+  },
+  progressBarFill: { height: "100%", backgroundColor: colors.accent },
+
+  trainCard: {
+    backgroundColor: colors.trainBg,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    borderColor: colors.trainBorder,
+    minHeight: 120,
+    overflow: "hidden",
+    position: "relative",
+    alignItems: "center",
+    marginTop: spacing.sm,
+    justifyContent: "center",
+  },
+  trainCardPressed: { opacity: 0.9, transform: [{ scale: 0.99 }] },
+  trainPattern: {
+    position: "absolute",
+    left: -10,
+    right: -10,
+    top: -10,
+    bottom: -10,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    alignContent: "space-between",
+    padding: spacing.md,
+  },
+  trainPatternIcon: { opacity: 0.1 },
+  trainContent: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  trainText: {
+    ...typography.AlternativeLarge,
+    color: colors.text,
+    fontSize: 34,
   },
 });

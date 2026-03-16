@@ -21,7 +21,6 @@ import type { RootStackParamList } from "../../navigation";
 
 import { colors, spacing, radius, typography } from "../../theme";
 
-// ✅ Ajuste o caminho conforme seu projeto
 import {
   EXERCISES_BY_GROUP,
   type Exercise as LibraryExercise,
@@ -335,7 +334,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: colors.surfaceSoft,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.accent,
   },
   backText: { color: colors.text, fontSize: 18, fontWeight: "900" },
   headerTitle: {
@@ -428,7 +427,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-  // Exercícios
   exerciseList: {
     padding: spacing.lg,
     paddingTop: 0,
@@ -475,7 +473,6 @@ const styles = StyleSheet.create({
     borderColor: colors.accent,
   },
 
-  // Progresso
   progressCard: {
     marginTop: spacing.lg,
     backgroundColor: colors.surfaceSoft,

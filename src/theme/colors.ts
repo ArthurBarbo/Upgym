@@ -24,4 +24,7 @@ export const colors = {
 
   /*utilitario*/
   green: "#22C55E",
+
+  trainBg: "#FF4D2D",
+  trainBorder: "#E63A1E",
 };
