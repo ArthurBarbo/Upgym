@@ -1,9 +1,11 @@
+import { getTrainerName } from "./Trainers";
 export type BookingRequestStatus = "PENDING" | "APPROVED" | "REJECTED";
 
 export type BookingRequest = {
   id: string;
   studentName: string;
   trainerId: string;
+  trainerName: string;
   date: string;
   hour: string;
   status: BookingRequestStatus;
@@ -17,14 +19,16 @@ function uid() {
 }
 
 export function createBookingRequest(
-  data: Omit<BookingRequest, "id" | "status" | "createdAt">
+  data: Omit<BookingRequest, "id" | "status" | "createdAt" | "trainerName">
 ) {
   const req: BookingRequest = {
     id: uid(),
     status: "PENDING",
     createdAt: Date.now(),
     ...data,
+    trainerName: getTrainerName(data.trainerId),
   };
+
   requests.unshift(req);
   return req;
 }

@@ -133,7 +133,7 @@ export default function MarkingsScreen({ navigation, route }: any) {
                   </View>
                 </View>
 
-                <Text style={styles.requestSub}>Personal: {r.trainerId}</Text>
+                <Text style={styles.requestSub}>Personal: {r.trainerName}</Text>
               </View>
             ))
           )}

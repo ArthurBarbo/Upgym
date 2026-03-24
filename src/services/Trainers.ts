@@ -10,7 +10,7 @@ export const STAFF_TRAINER_ID = "staff_personal_01";
 export const TRAINERS: Trainer[] = [
   {
     id: "staff_personal_01",
-    name: "Richard Personal",
+    name: "Richard Bertiges",
     specialty: "Hipertrofia e Performance",
     status: "AVAILABLE",
   },
@@ -27,3 +27,11 @@ export const TRAINERS: Trainer[] = [
     status: "SOLD_OUT",
   },
 ];
+
+export function getTrainerById(trainerId: string) {
+  return TRAINERS.find((t) => t.id === trainerId);
+}
+
+export function getTrainerName(trainerId: string) {
+  return getTrainerById(trainerId)?.name ?? trainerId;
+}
