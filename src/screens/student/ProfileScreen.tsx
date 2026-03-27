@@ -8,7 +8,7 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
-
+import { useUser } from "@/context/UserContext";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { RootStackParamList } from "../../navigation";
 
@@ -38,7 +38,6 @@ export default function ProfileScreen({ navigation, route }: Props) {
     );
   }
 
-  // ✅ hooks dentro do componente
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(user.name);
 
@@ -50,7 +49,7 @@ export default function ProfileScreen({ navigation, route }: Props) {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  const { user: ctxUser, updateUser } = useUser();
   const mensalidadeBRL = useMemo(() => {
     return mensalidade.toLocaleString("pt-BR", {
       style: "currency",
@@ -59,12 +58,16 @@ export default function ProfileScreen({ navigation, route }: Props) {
   }, [mensalidade]);
 
   function handleSaveName() {
-    if (!name.trim()) {
+    const trimmed = name.trim();
+
+    if (!trimmed) {
       Alert.alert("Atenção", "Digite um nome válido.");
       return;
     }
+
+    updateUser({ name: trimmed }); // ✅ atualiza o user global (Student muda automaticamente)
     setEditing(false);
-    Alert.alert("Pronto", "Nome atualizado.");
+    Alert.alert("Pronto", "Nome atualizado");
   }
 
   function handleChangePassword() {

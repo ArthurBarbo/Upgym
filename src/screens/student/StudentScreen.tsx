@@ -6,17 +6,17 @@ import { SideMenu } from "../../components/SideMenu";
 import { Dumbbell, BookOpen, Flame, CalendarDays } from "lucide-react-native";
 import { CalendarToggleModal } from "@/components/SequencyCalendar/SequencyCalendar";
 import { QrModal } from "@/components/Modal/QrModal/QrModal";
+import { useUser } from "@/context/UserContext";
 
 export default function StudentScreen() {
   const navigation = useNavigation<any>();
-  const route = useRoute<any>();
-  const userName = route?.params?.user?.name ?? "aluno";
+  const { user } = useUser();
+  const userName = user?.name ?? "aluno";
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
 
-  // Mock progresso
   const completed = 6;
   const total = 20;
   const progressPct = total ? Math.round((completed / total) * 100) : 0;
@@ -27,7 +27,9 @@ export default function StudentScreen() {
         <Text style={styles.hamburgerText}>☰</Text>
       </Pressable>
 
-      <Text style={styles.titleUser}>Olá, {userName}</Text>
+      <Text numberOfLines={1} ellipsizeMode="tail" style={styles.titleUser}>
+        Olá, {userName}
+      </Text>
       <Text style={styles.subtitle}>
         Aqui você acompanha sua rotina na academia
       </Text>
@@ -93,9 +95,7 @@ export default function StudentScreen() {
             styles.panelTile,
             pressed && styles.panelTilePressed,
           ]}
-          onPress={() =>
-            navigation.navigate("Markings", { user: route?.params?.user })
-          }
+          onPress={() => navigation.navigate("Markings", { user })}
           accessibilityRole="button"
           hitSlop={10}
           android_ripple={{ color: "rgba(255,255,255,0.08)" }}
@@ -169,8 +169,7 @@ export default function StudentScreen() {
           },
           {
             label: "Meu perfil",
-            onPress: () =>
-              navigation.navigate("Profile", { user: route?.params?.user }),
+            onPress: () => navigation.navigate("Profile", { user }),
           },
           {
             label: "Minhas Marcações",

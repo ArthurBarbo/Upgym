@@ -8,6 +8,7 @@ import { useFonts } from "expo-font";
 import { BlackOpsOne_400Regular } from "@expo-google-fonts/black-ops-one";
 import { Staatliches_400Regular } from "@expo-google-fonts/staatliches";
 
+import { UserProvider } from "@/context/UserContext";
 import AppNavigator from "./src/navigation";
 import { colors } from "./src/theme";
 
@@ -33,9 +34,11 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <AppNavigator />
-      </NavigationContainer>
+      <UserProvider>
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </UserProvider>
     </GestureHandlerRootView>
   );
 }
