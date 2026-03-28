@@ -1,25 +1,34 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import { useState } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useState, useMemo } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { colors, spacing, radius, typography } from "../../theme";
 import { SideMenu } from "../../components/SideMenu";
 import { Dumbbell, BookOpen, Flame, CalendarDays } from "lucide-react-native";
 import { CalendarToggleModal } from "@/components/SequencyCalendar/SequencyCalendar";
 import { QrModal } from "@/components/Modal/QrModal/QrModal";
 import { useUser } from "@/context/UserContext";
+import { useProgress } from "@/context/ProgressContext";
+import { MOCK_TRAININGS } from "./TrainingScreen";
 
 export default function StudentScreen() {
   const navigation = useNavigation<any>();
   const { user } = useUser();
   const userName = user?.name ?? "aluno";
+  const { completedSets } = useProgress();
+  const totalSets = useMemo(() => {
+    return MOCK_TRAININGS.reduce(
+      (sumT, t) => sumT + t.exercises.reduce((sumE, ex) => sumE + ex.sets, 0),
+      0
+    );
+  }, []);
+
+  const progressPct = totalSets
+    ? Math.round((completedSets / totalSets) * 100)
+    : 0;
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
-
-  const completed = 6;
-  const total = 20;
-  const progressPct = total ? Math.round((completed / total) * 100) : 0;
 
   return (
     <View style={styles.container}>
@@ -112,7 +121,7 @@ export default function StudentScreen() {
           <View style={styles.progressTop}>
             <Text style={styles.progressTitle}>Progresso da semana</Text>
             <Text style={styles.progressValue}>
-              {completed}/{total}
+              {completedSets}/{totalSets}
             </Text>
           </View>
 

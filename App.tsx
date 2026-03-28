@@ -1,17 +1,18 @@
-import "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "./src/config/calendarLocale";
 import { NavigationContainer } from "@react-navigation/native";
 import { ActivityIndicator, View } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+
 
 import { useFonts } from "expo-font";
 import { BlackOpsOne_400Regular } from "@expo-google-fonts/black-ops-one";
 import { Staatliches_400Regular } from "@expo-google-fonts/staatliches";
 
-import { UserProvider } from "@/context/UserContext";
 import AppNavigator from "./src/navigation";
 import { colors } from "./src/theme";
 
+import { UserProvider } from "@/context/UserContext";
+import { ProgressProvider } from "@/context/ProgressContext";
 export default function App() {
   const [fontsLoaded] = useFonts({
     BlackOpsOne_400Regular,
@@ -35,9 +36,11 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <UserProvider>
-        <NavigationContainer>
-          <AppNavigator />
-        </NavigationContainer>
+        <ProgressProvider>
+          <NavigationContainer>
+            <AppNavigator />
+          </NavigationContainer>
+        </ProgressProvider>
       </UserProvider>
     </GestureHandlerRootView>
   );

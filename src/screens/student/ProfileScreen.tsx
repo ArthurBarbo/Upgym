@@ -65,7 +65,7 @@ export default function ProfileScreen({ navigation, route }: Props) {
       return;
     }
 
-    updateUser({ name: trimmed }); // ✅ atualiza o user global (Student muda automaticamente)
+    updateUser({ name: trimmed });
     setEditing(false);
     Alert.alert("Pronto", "Nome atualizado");
   }
@@ -94,7 +94,6 @@ export default function ProfileScreen({ navigation, route }: Props) {
     Alert.alert("Feito", "Senha alterada");
   }
 
-  // ✅ return principal dentro do componente
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.header}>
@@ -127,7 +126,6 @@ export default function ProfileScreen({ navigation, route }: Props) {
 
         <Text style={[styles.label, { marginTop: spacing.md }]}>E-mail</Text>
 
-        {/* Email cinza e não clicável */}
         <TextInput
           value={user.email}
           editable={false}

@@ -8,6 +8,7 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
+import { useProgress } from "@/context/ProgressContext";
 import {
   Clock3,
   CalendarDays,
@@ -55,7 +56,7 @@ function getExerciseById(id: string): LibraryExercise | undefined {
   return undefined;
 }
 
-const MOCK_TRAININGS: Training[] = [
+export const MOCK_TRAININGS: Training[] = [
   {
     id: "t0",
     title: "Mobilidade",
@@ -118,13 +119,7 @@ const MOCK_TRAININGS: Training[] = [
 
 export default function TrainingsScreen({ navigation }: Props) {
   const [query, setQuery] = useState("");
-
-  type SetKey = string;
-  const [doneSets, setDoneSets] = useState<Record<SetKey, boolean>>({});
-
-  function toggleSet(key: SetKey) {
-    setDoneSets((prev) => ({ ...prev, [key]: !prev[key] }));
-  }
+  const { doneSets, toggleSet, completedSets } = useProgress();
 
   const totalSets = useMemo(() => {
     return MOCK_TRAININGS.reduce(
@@ -132,10 +127,6 @@ export default function TrainingsScreen({ navigation }: Props) {
       0
     );
   }, []);
-
-  const completedSets = useMemo(() => {
-    return Object.values(doneSets).filter(Boolean).length;
-  }, [doneSets]);
 
   const progress = useMemo(() => {
     if (!totalSets) return 0;

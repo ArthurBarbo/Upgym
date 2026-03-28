@@ -11,8 +11,10 @@ import { Calendar } from "react-native-calendars";
 
 import { TRAINERS } from "../../services/Trainers";
 import { colors, spacing, radius, typography } from "@/theme";
-import { createBookingRequest } from "@/services/bookingRequests";
-import { listRequestsByStudent } from "@/services/bookingRequests";
+import {
+  createBookingRequest,
+  listRequestsByStudent,
+} from "@/services/bookingRequests";
 
 function toISODate(d: Date) {
   const y = d.getFullYear();
