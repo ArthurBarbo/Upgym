@@ -32,7 +32,7 @@ export default function AppNavigator() {
       <Stack.Screen name="LibraryGroup" component={LibraryGroupScreen} />
       <Stack.Screen name="Trainings" component={TrainingsScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
-      {/* <Stack.Screen name="Client" component={ClientScreen} /> */}
+      <Stack.Screen name="Client" component={ClientScreen} />
     </Stack.Navigator>
   );
 }

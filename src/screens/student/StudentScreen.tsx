@@ -12,9 +12,15 @@ import { MOCK_TRAININGS } from "./TrainingScreen";
 
 export default function StudentScreen() {
   const navigation = useNavigation<any>();
-  const { user } = useUser();
+  const { user, logout } = useUser();
   const userName = user?.name ?? "aluno";
+
   const { completedSets } = useProgress();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [calendarOpen, setCalendarOpen] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
+
   const totalSets = useMemo(() => {
     return MOCK_TRAININGS.reduce(
       (sumT, t) => sumT + t.exercises.reduce((sumE, ex) => sumE + ex.sets, 0),
@@ -26,9 +32,15 @@ export default function StudentScreen() {
     ? Math.round((completedSets / totalSets) * 100)
     : 0;
 
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [calendarOpen, setCalendarOpen] = useState(false);
-  const [qrOpen, setQrOpen] = useState(false);
+  function handleLogout() {
+    setMenuOpen(false);
+    logout();
+
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }],
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -185,6 +197,7 @@ export default function StudentScreen() {
             onPress: () => navigation.navigate("Markings"),
           },
         ]}
+        onLogout={handleLogout}
       />
     </View>
   );

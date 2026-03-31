@@ -9,6 +9,7 @@ type UserContextValue = {
   user: User | null;
   setUser: (u: User) => void;
   updateUser: (patch: Partial<User>) => void;
+  logout: () => void;
 };
 
 const UserContext = createContext<UserContextValue | undefined>(undefined);
@@ -23,6 +24,10 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     setUserState(u);
   }
 
+  function logout() {
+    setUserState(null);
+  }
+
   function updateUser(patch: Partial<User>) {
     setUserState((prev) => {
       if (!prev) return prev;
@@ -30,7 +35,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     });
   }
 
-  const value = useMemo(() => ({ user, setUser, updateUser }), [user]);
+  const value = useMemo(() => ({ user, setUser, updateUser, logout }), [user]);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }

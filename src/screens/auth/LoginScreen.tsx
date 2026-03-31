@@ -15,7 +15,7 @@ const MockUser = [
 
   {
     role: "staff" as const,
-    name: "Bruno",
+    name: "Richard",
     email: "staff@upgym.com",
     password: "123456",
   },

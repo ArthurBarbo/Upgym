@@ -38,11 +38,8 @@ function buildSlots() {
   ];
 }
 
-// mock de indisponíveis por personal + data
 const MOCK_BLOCKED: Record<string, Record<string, string[]>> = {
-  staff_personal_01: {
-    // "2026-01-22": ["10:00", "18:00"],
-  },
+  staff_personal_01: {},
   staff_personal_02: {},
   staff_personal_03: {},
 };
