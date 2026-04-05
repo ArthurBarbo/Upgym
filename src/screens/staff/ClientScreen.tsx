@@ -1,4 +1,12 @@
-import { View, Text, StyleSheet, Pressable, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  ScrollView,
+  Modal,
+} from "react-native";
+import { useState } from "react";
 import { useRoute } from "@react-navigation/native";
 import { colors, spacing, radius, typography } from "../../theme";
 
@@ -25,19 +33,20 @@ const MOCK_REQUESTS = [
     student: "Arthur",
     date: "2026-03-31",
     hour: "19:00",
-    status: "PENDING",
+    status: "PENDENTE",
   },
   {
     id: "r2",
     student: "Marina",
     date: "2026-04-01",
     hour: "18:00",
-    status: "PENDING",
+    status: "PENDENTE",
   },
 ];
 
 export default function ClientScreen() {
   const route = useRoute<any>();
+  const [checkinsOpen, setcheckinsOpen] = useState(false);
   const staff = (route?.params?.user as StaffUser | undefined) ?? {
     role: "staff",
     name: "Professor",
@@ -63,7 +72,7 @@ export default function ClientScreen() {
         ))}
 
         <View style={{ height: spacing.md }} />
-        <Pressable style={styles.btn} onPress={() => {}}>
+        <Pressable style={styles.btn} onPress={() => setcheckinsOpen(true)}>
           <Text style={styles.btnText}>Ver lista completa</Text>
         </Pressable>
       </View>
@@ -115,6 +124,52 @@ export default function ClientScreen() {
           </Pressable>
         </View>
       </View>
+      <Modal
+        visible={checkinsOpen}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setcheckinsOpen(false)}
+      >
+        <View style={styles.backdrop}>
+          <View style={styles.sheet}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>Movimento de hoje</Text>
+
+              <Pressable
+                onPress={() => setcheckinsOpen(false)}
+                style={styles.closeBtn}
+              >
+                <Text style={styles.closeTxt}>✕</Text>
+              </Pressable>
+            </View>
+
+            <Text style={styles.modalSectionTitle}>Check-in</Text>
+            {MOCK_CHECKINS.map((c) => (
+              <View key={c.id} style={styles.modalRow}>
+                <Text style={styles.modalRowMain}>{c.name}</Text>
+                <Text style={styles.modalRowMuted}>{c.time}</Text>
+              </View>
+            ))}
+
+            <View style={{ height: spacing.md }} />
+
+            <Text style={styles.modalSectionTitle}>Check-out</Text>
+            {MOCK_CHECKOUT.map((d) => (
+              <View key={d.id} style={styles.modalRow}>
+                <Text style={styles.modalRowMain}>{d.name}</Text>
+                <Text style={styles.modalRowMuted}>{d.time}</Text>
+              </View>
+            ))}
+
+            <Pressable
+              style={styles.primaryBtn}
+              onPress={() => setcheckinsOpen(false)}
+            >
+              <Text style={styles.primaryTxt}>Fechar</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
 
       <View style={{ height: spacing.xl }} />
     </ScrollView>
@@ -184,4 +239,81 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
   },
   btnOutlineText: { color: colors.text, fontWeight: "900" },
+
+  backdrop: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.6)",
+    justifyContent: "center",
+    padding: spacing.lg,
+  },
+
+  sheet: {
+    backgroundColor: colors.surfaceSoft,
+    borderRadius: radius.lg,
+    padding: spacing.lg,
+    borderWidth: 1,
+    borderColor: colors.accentDark,
+  },
+
+  modalHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: spacing.md,
+  },
+
+  modalTitle: {
+    ...typography.Alternative,
+    color: colors.text,
+    fontSize: 22,
+  },
+
+  closeBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 999,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255,255,255,0.06)",
+  },
+
+  closeTxt: {
+    color: colors.text,
+    fontSize: 16,
+    fontWeight: "900",
+  },
+
+  modalSectionTitle: {
+    ...typography.body,
+    color: colors.textMuted,
+    fontWeight: "900",
+    marginBottom: spacing.sm,
+  },
+
+  modalRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+
+  modalRowMain: { color: colors.text, fontWeight: "900" },
+  modalRowMuted: { color: colors.textMuted, fontWeight: "800" },
+
+  primaryBtn: {
+    marginTop: spacing.lg,
+    height: 48,
+    borderRadius: radius.lg,
+    backgroundColor: colors.accent,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  primaryTxt: {
+    color: colors.text,
+    fontWeight: "900",
+    fontSize: 18,
+  },
 });
