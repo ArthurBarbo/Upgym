@@ -6,8 +6,16 @@ import { useUser } from "@/context/UserContext";
 
 export default function RestrictedScreen() {
   const navigation = useNavigation<any>();
-  const { user } = useUser();
+  const { user, logout } = useUser();
   const userName = user?.name ?? "aluno";
+
+  function handleBack() {
+    logout();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }],
+    });
+  }
 
   return (
     <View style={styles.container}>
@@ -24,7 +32,7 @@ export default function RestrictedScreen() {
         </Text>
 
         <View style={{ height: spacing.lg }} />
-        <Button title="Voltar" onPress={() => navigation.goBack()} />
+        <Button title="Voltar" onPress={handleBack} />
       </View>
     </View>
   );

@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
 import { colors, spacing, radius, typography } from "../../theme";
 import { Button } from "../../components/Button";
 import { Dumbbell } from "../../components/Dumbbell";
+import { useUser } from "@/context/UserContext";
 import { useNavigation } from "@react-navigation/native";
 
 const MockUser = [
@@ -28,6 +29,7 @@ const MockUser = [
 ];
 
 export default function LoginScreen() {
+  const { setUser } = useUser();
   const navigation = useNavigation<any>();
 
   const [email, setEmail] = useState("");
@@ -44,6 +46,8 @@ export default function LoginScreen() {
       alert("E-mail ou senha inválidos");
       return;
     }
+
+    setUser({ name: found.name, email: found.email });
 
     if (found.role === "student") {
       navigation.replace("Student", {

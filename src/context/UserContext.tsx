@@ -15,10 +15,10 @@ type UserContextValue = {
 const UserContext = createContext<UserContextValue | undefined>(undefined);
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUserState] = useState<User | null>({
-    name: "Arthur",
-    email: "aluno@upgym.com",
-  });
+  const [user, setUserState] = useState<User | null>(null);
+  //   name: "Arthur",
+  //   email: "aluno@upgym.com",
+  // });
 
   function setUser(u: User) {
     setUserState(u);
