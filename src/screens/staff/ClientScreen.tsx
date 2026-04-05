@@ -5,6 +5,7 @@ import {
   Pressable,
   ScrollView,
   Modal,
+  Alert,
 } from "react-native";
 import { useState } from "react";
 import { useRoute } from "@react-navigation/native";
@@ -45,6 +46,7 @@ const MOCK_REQUESTS = [
 ];
 
 export default function ClientScreen() {
+  const [requests, setRequests] = useState(MOCK_REQUESTS);
   const route = useRoute<any>();
   const [checkinsOpen, setcheckinsOpen] = useState(false);
   const staff = (route?.params?.user as StaffUser | undefined) ?? {
@@ -52,6 +54,17 @@ export default function ClientScreen() {
     name: "Professor",
     email: "staff@upgym.com",
   };
+  function approveRequest(id: string) {
+    setRequests((prev) =>
+      prev.map((r) => (r.id === id ? { ...r, status: "APROVADO" } : r))
+    );
+  }
+
+  function rejectRequest(id: string) {
+    setRequests((prev) =>
+      prev.map((r) => (r.id === id ? { ...r, status: "RECUSADO" } : r))
+    );
+  }
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -77,7 +90,6 @@ export default function ClientScreen() {
         </Pressable>
       </View>
 
-      {/* BLOQUEADOS */}
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Usuários bloqueados</Text>
         <Text style={styles.cardText}>Alunos impedidos de treinar.</Text>
@@ -92,37 +104,42 @@ export default function ClientScreen() {
         ))}
 
         <View style={{ height: spacing.md }} />
-        <Pressable style={styles.btn} onPress={() => {}}>
+        <Pressable style={styles.btn} onPress={() => Alert.alert("Em Breve")}>
           <Text style={styles.btnText}>Gerenciar bloqueios</Text>
         </Pressable>
       </View>
 
-      {/* SOLICITAÇÕES */}
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Solicitações de marcação</Text>
         <Text style={styles.cardText}>Pedidos aguardando aprovação.</Text>
 
         <View style={{ height: spacing.md }} />
 
-        {MOCK_REQUESTS.map((r) => (
+        {requests.map((r) => (
           <View key={r.id} style={styles.rowCol}>
             <Text style={styles.rowMain}>
-              {r.student} • {r.date} {r.hour}
+              {r.student} - {r.date} {r.hour}
             </Text>
+
             <Text style={styles.rowMuted}>Status: {r.status}</Text>
+
+            <View style={[styles.btnRow, { marginTop: spacing.sm }]}>
+              <Pressable
+                style={styles.btnOutline}
+                onPress={() => rejectRequest(r.id)}
+              >
+                <Text style={styles.btnOutlineText}>Rejeitar</Text>
+              </Pressable>
+
+              <Pressable
+                style={styles.btn}
+                onPress={() => approveRequest(r.id)}
+              >
+                <Text style={(styles.btnText, styles.approve)}>Aprovar</Text>
+              </Pressable>
+            </View>
           </View>
         ))}
-
-        <View style={{ height: spacing.md }} />
-        <View style={styles.btnRow}>
-          <Pressable style={styles.btnOutline} onPress={() => {}}>
-            <Text style={styles.btnOutlineText}>Rejeitar</Text>
-          </Pressable>
-
-          <Pressable style={styles.btn} onPress={() => {}}>
-            <Text style={styles.btnText}>Aprovar</Text>
-          </Pressable>
-        </View>
       </View>
       <Modal
         visible={checkinsOpen}
@@ -191,6 +208,13 @@ const styles = StyleSheet.create({
     marginTop: spacing.xs,
     marginBottom: spacing.lg,
   },
+  approve: {
+    width: 100,
+    ...typography.text,
+    color: colors.text,
+    fontWeight: 900,
+    textAlign: "center",
+  },
 
   card: {
     backgroundColor: colors.surfaceSoft,
@@ -234,7 +258,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "transparent",
+    backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.border,
   },
@@ -299,7 +323,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.border,
   },
 
-  modalRowMain: { color: colors.text, fontWeight: "900" },
+  modalRowMain: { color: colors.text, fontWeight: "700" },
   modalRowMuted: { color: colors.textMuted, fontWeight: "800" },
 
   primaryBtn: {
