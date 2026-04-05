@@ -1,19 +1,30 @@
 import { View, Text, StyleSheet } from "react-native";
 import { colors, spacing, radius, typography } from "../../theme";
 import { Button } from "../../components/Button";
+import { useNavigation } from "@react-navigation/native";
+import { useUser } from "@/context/UserContext";
 
 export default function RestrictedScreen() {
+  const navigation = useNavigation<any>();
+  const { user } = useUser();
+  const userName = user?.name ?? "aluno";
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
+        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.greeting}>
+          Olá, {userName}
+        </Text>
+
         <Text style={styles.title}>Acesso restrito</Text>
+
         <Text style={styles.text}>
-          Consulte imediatamente a recepção da academia para regularizar sua
-          situação.
+          Consta algo de errado. Compareça à recepção da academia para
+          regularizar sua situação.
         </Text>
 
         <View style={{ height: spacing.lg }} />
-        <Button title="Voltar" onPress={() => {}} />
+        <Button title="Voltar" onPress={() => navigation.goBack()} />
       </View>
     </View>
   );
@@ -32,6 +43,11 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
     borderWidth: 1,
     borderColor: colors.border,
+  },
+  greeting: {
+    ...typography.AlternativeLarge,
+    color: colors.accentplus,
+    marginBottom: spacing.sm,
   },
   title: {
     ...typography.Logintitle,

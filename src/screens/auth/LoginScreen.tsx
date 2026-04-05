@@ -19,6 +19,12 @@ const MockUser = [
     email: "staff@upgym.com",
     password: "123456",
   },
+  {
+    role: "restricted" as const,
+    name: "Carlos",
+    email: "user@upgym.com",
+    password: "123456",
+  },
 ];
 
 export default function LoginScreen() {
@@ -46,11 +52,17 @@ export default function LoginScreen() {
       return;
     }
 
+    if (found.role === "restricted") {
+      navigation.replace("Restricted", {
+        user: { role: "restricted", name: found.name, email: found.email },
+      });
+      return;
+    }
+
     navigation.replace("Client", {
       user: { role: "staff", name: found.name, email: found.email },
     });
   }
-
   return (
     <View style={styles.container}>
       <View style={styles.top}>

@@ -8,7 +8,8 @@ import {
   Alert,
 } from "react-native";
 import { useState } from "react";
-import { useRoute } from "@react-navigation/native";
+import { useUser } from "@/context/UserContext";
+import { useRoute, useNavigation } from "@react-navigation/native";
 import { colors, spacing, radius, typography } from "../../theme";
 
 type StaffUser = { role: "staff"; name: string; email: string };
@@ -47,6 +48,8 @@ const MOCK_REQUESTS = [
 
 export default function ClientScreen() {
   const [requests, setRequests] = useState(MOCK_REQUESTS);
+  const navigation = useNavigation<any>();
+  const { logout } = useUser();
   const route = useRoute<any>();
   const [checkinsOpen, setcheckinsOpen] = useState(false);
   const staff = (route?.params?.user as StaffUser | undefined) ?? {
@@ -59,6 +62,13 @@ export default function ClientScreen() {
       prev.map((r) => (r.id === id ? { ...r, status: "APROVADO" } : r))
     );
   }
+  function handleExit() {
+    logout();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }],
+    });
+  }
 
   function rejectRequest(id: string) {
     setRequests((prev) =>
@@ -69,11 +79,17 @@ export default function ClientScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.title}>Painel do Professor</Text>
-      <Text style={styles.subtitle}>Logado como {staff.name}</Text>
+
+      <View style={styles.headerRow}>
+        <Text style={styles.subtitle}>Logado como {staff.name}</Text>
+        <Pressable style={styles.logoutButton} onPress={handleExit}>
+          <Text style={styles.btnText}>Sair</Text>
+        </Pressable>
+      </View>
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Check-ins de hoje</Text>
-        <Text style={styles.cardText}>Quem está na academia agora.</Text>
+        <Text style={styles.cardText}>Quem está na academia agora:</Text>
 
         <View style={{ height: spacing.md }} />
 
@@ -92,7 +108,7 @@ export default function ClientScreen() {
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Usuários bloqueados</Text>
-        <Text style={styles.cardText}>Alunos impedidos de treinar.</Text>
+        <Text style={styles.cardText}>Alunos á regularizar:</Text>
 
         <View style={{ height: spacing.md }} />
 
@@ -111,7 +127,7 @@ export default function ClientScreen() {
 
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Solicitações de marcação</Text>
-        <Text style={styles.cardText}>Pedidos aguardando aprovação.</Text>
+        <Text style={styles.cardText}>Pedidos aguardando aprovação:</Text>
 
         <View style={{ height: spacing.md }} />
 
@@ -121,7 +137,15 @@ export default function ClientScreen() {
               {r.student} - {r.date} {r.hour}
             </Text>
 
-            <Text style={styles.rowMuted}>Status: {r.status}</Text>
+            <Text
+              style={[
+                styles.rowMuted,
+                r.status === "APROVADO" && styles.statusApproved,
+                r.status === "RECUSADO" && styles.statusRejected,
+              ]}
+            >
+              Status: {r.status}
+            </Text>
 
             <View style={[styles.btnRow, { marginTop: spacing.sm }]}>
               <Pressable
@@ -135,7 +159,7 @@ export default function ClientScreen() {
                 style={styles.btn}
                 onPress={() => approveRequest(r.id)}
               >
-                <Text style={(styles.btnText, styles.approve)}>Aprovar</Text>
+                <Text style={styles.approve}>Aprovar</Text>
               </Pressable>
             </View>
           </View>
@@ -206,11 +230,9 @@ const styles = StyleSheet.create({
     ...typography.body,
     color: colors.textMuted,
     marginTop: spacing.xs,
-    marginBottom: spacing.lg,
   },
   approve: {
     width: 100,
-    ...typography.text,
     color: colors.text,
     fontWeight: 900,
     textAlign: "center",
@@ -264,6 +286,14 @@ const styles = StyleSheet.create({
   },
   btnOutlineText: { color: colors.text, fontWeight: "900" },
 
+  headerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: spacing.xs,
+    marginBottom: spacing.lg,
+  },
+
   backdrop: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.6)",
@@ -291,6 +321,8 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontSize: 22,
   },
+  statusApproved: { color: colors.green },
+  statusRejected: { color: colors.accentplus },
 
   closeBtn: {
     width: 36,
@@ -339,5 +371,13 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontWeight: "900",
     fontSize: 18,
+  },
+  logoutButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    borderColor: colors.accent,
+    backgroundColor: colors.surfaceSoft,
   },
 });

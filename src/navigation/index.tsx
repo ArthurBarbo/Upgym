@@ -8,10 +8,12 @@ import ClientScreen from "../screens/staff/ClientScreen";
 import MarkingsScreen from "../screens/student/MarkingsScreen";
 import LibraryScreen from "../screens/student/LibraryScreen";
 import LibraryGroupScreen from "../screens/student/LibraryGroupScreen";
+import Blockedpayment from "../screens/student/Blockedpayment";
 
 export type RootStackParamList = {
   Login: undefined;
   Student: { user: { name: string; email: string } };
+  Restricted: { user: { role: "restricted"; name: string; email: string } };
   Trainings: undefined;
   Profile: { user: { name: string; email: string } };
   Client: undefined;
@@ -27,12 +29,13 @@ export default function AppNavigator() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Student" component={StudentScreen} />
+      <Stack.Screen name="Restricted" component={Blockedpayment} />
+      <Stack.Screen name="Client" component={ClientScreen} />
       <Stack.Screen name="Markings" component={MarkingsScreen} />
       <Stack.Screen name="Library" component={LibraryScreen} />
       <Stack.Screen name="LibraryGroup" component={LibraryGroupScreen} />
       <Stack.Screen name="Trainings" component={TrainingsScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Screen name="Client" component={ClientScreen} />
     </Stack.Navigator>
   );
 }
