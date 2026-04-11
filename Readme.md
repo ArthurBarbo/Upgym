@@ -96,7 +96,7 @@ O projeto prioriza UI clean, tema consistente e estado global via **Context API*
 
 ## Fluxos do app
 
-### 1) Login (Mock)
+### 1) Login
 
 Arquivo: `src/screens/auth/LoginScreen.tsx`
 
@@ -158,7 +158,6 @@ Arquivos:
 
 - Exercícios organizados por grupos musculares
 - Inclui grupo **mobilidade**
-- Campo opcional: `howTo?: string` (como fazer)
 
 Assets de apoio:
 
