@@ -59,7 +59,7 @@ Aplicativo mobile em **React Native + Expo + TypeScript** para rotina de academi
 │ │ └── MarkingsScreen.tsx
 │ ├── auth/
 │ │ └── LoginScreen.tsx
-│ └── staff/ (2100 tokens)
+│ └── staff/ 
 │ │ └── ClientScreen.tsx
 └── navigation/
 │ └── index.tsx
