@@ -1,28 +1,22 @@
 export const colors = {
-  /* FUNDOS */
-  background: "#0A0A0A", // fundo geral (preto)
-  surface: "#1A1B1F", // cards / modais
-  surfaceSoft: "#21232A", // inputs / itens internos
+  background: "#0A0A0A",
+  surface: "#1A1B1F",
+  surfaceSoft: "#21232A",
 
-  /* TEXTO */
-  text: "#EDEDED", // texto principal
-  textMuted: "#A1A1AA", // texto secundário
-  placeholder: "#7C7F87", // placeholder
+  text: "#EDEDED",
+  textMuted: "#A1A1AA",
+  placeholder: "#7C7F87",
 
-  /* BORDAS */
-  border: "#2B2E36", // bordas / divisões
+  border: "#2B2E36",
 
-  /* DESTAQUE */
-  accent: "#B11226", // vinho aceso (CTA)
+  accent: "#B11226",
   accentDark: "#9E1B2E",
   accentplus: "#FF3B30",
 
-  /* IDENTIDADE */
-  metallic: "#A1A6B0", // título / marca
+  metallic: "#A1A6B0",
   white: "#FFFFFF",
   black: "#000000",
 
-  /*utilitario*/
   green: "#22C55E",
 
   trainBg: "#FF4D2D",
